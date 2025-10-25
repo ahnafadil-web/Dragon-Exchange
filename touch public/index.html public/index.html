@@ -1,1 +1,123 @@
-a
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRAGON EXCHANGE - Crypto Trading Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>🐉 DRAGON EXCHANGE</h1>
+            </div>
+            <nav>
+                <div id="userInfo" class="user-info" style="display: none;">
+                    <span id="userEmail"></span>
+                    <button onclick="logout()">Logout</button>
+                </div>
+                <div id="authButtons" class="auth-buttons">
+                    <button onclick="showLogin()">Login</button>
+                    <button onclick="showRegister()">Register</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container main-content">
+        <!-- Auth Modal -->
+        <div id="authModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeAuthModal()">&times;</span>
+                <h2 id="authTitle">Login</h2>
+                <form id="authForm">
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <button type="submit" id="authButton">Login</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Trading View -->
+        <div class="trading-layout">
+            <!-- Market Data -->
+            <div class="market-data">
+                <h3>Market Prices</h3>
+                <div id="marketPrices" class="prices-list">
+                    <!-- Prices will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Trading Chart -->
+            <div class="chart-section">
+                <div class="chart-container">
+                    <canvas id="tradingChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Order Form -->
+            <div class="order-section">
+                <div class="order-form">
+                    <h3>Trade</h3>
+                    <div class="pair-selector">
+                        <select id="tradingPair">
+                            <option value="BTCUSDT">BTC/USDT</option>
+                            <option value="ETHUSDT">ETH/USDT</option>
+                            <option value="ADAUSDT">ADA/USDT</option>
+                        </select>
+                    </div>
+                    <div class="order-type">
+                        <button class="tab-button active" data-type="buy">Buy</button>
+                        <button class="tab-button" data-type="sell">Sell</button>
+                    </div>
+                    <form id="orderForm">
+                        <input type="number" id="quantity" placeholder="Quantity" step="0.001" required>
+                        <input type="number" id="price" placeholder="Price" step="0.01" required>
+                        <button type="submit" class="buy-btn">Place Buy Order</button>
+                    </form>
+                </div>
+
+                <!-- Wallet Balance -->
+                <div class="wallet-balance">
+                    <h3>Wallet Balance</h3>
+                    <div id="walletBalance">
+                        <p>USDT: <span id="usdtBalance">0.00</span></p>
+                        <p>BTC: <span id="btcBalance">0.00</span></p>
+                        <p>ETH: <span id="ethBalance">0.00</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Book -->
+        <div class="order-book">
+            <h3>Order Book</h3>
+            <div class="order-book-content">
+                <div class="bids">
+                    <h4>Bids (Buy)</h4>
+                    <div id="bidsList"></div>
+                </div>
+                <div class="asks">
+                    <h4>Asks (Sell)</h4>
+                    <div id="asksList"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Orders -->
+        <div class="user-orders">
+            <h3>Your Orders</h3>
+            <div id="userOrdersList"></div>
+        </div>
+    </div>
+
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/exchange.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>
